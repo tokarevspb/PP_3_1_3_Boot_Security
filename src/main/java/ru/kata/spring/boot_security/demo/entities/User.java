@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
-import javax.persistence.Transient;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -41,9 +40,6 @@ public class User implements UserDetails {
 
     @Column
     private String password;
-
-    @Transient
-    private String passwordConfirm;
 
     @ManyToMany
     @JoinTable(name="users_roles",
