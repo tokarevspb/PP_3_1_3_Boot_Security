@@ -9,6 +9,6 @@ import ru.kata.spring.boot_security.demo.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     @EntityGraph(attributePaths = {"roles"})
     User findByUsername(String username);
-
+    User  findByEmail(String email);
     User getReferenceById(Long id);
 }

@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUserById(long id) {
         return userRepository.getReferenceById(id);
     }
+
     public void updateUserById(User user) {
         if (user.getPassword().isEmpty()) {
             user.setPassword(userRepository.findByUsername(user.getUsername()).getPassword());
@@ -69,10 +70,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getUserByName(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+            user = userRepository.findByUsername(email);
+        }
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("User '%s' not found", email));
         }
         return user;
     }
